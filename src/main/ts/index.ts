@@ -1,5 +1,5 @@
 import {Request, Response, Express, Router} from "express";
-import usersRoute from './routes/userRoute'
+import usersRoute from './routes/user-routes'
 
 import express from "express";
 
@@ -8,6 +8,7 @@ const PORT: number = 1487;
 const app: Express = express();
 const router: Router = Router();
 
+app.use(express.json())
 app.use('/users', usersRoute);
 app.get("/", (__, response: Response) => {
   response.statusCode = 200;

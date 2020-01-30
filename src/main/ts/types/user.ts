@@ -7,7 +7,7 @@ class User {
   public password: string;
   public age: number;
 
-  constructor(id: Option<number>, name: string, email: string, password: string, age: number) {
+  constructor(name: string, email: string, password: string, age: number, id?: number) {
     this.id = id;
     this.name = name;
     this.email = email;

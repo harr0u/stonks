@@ -1,5 +1,5 @@
 import User from '../types/user';
-import { pick } from '../../utils';
+import { pick } from '../utils';
 
 
 function makeDummyUsers(count: number = 1): User[] {

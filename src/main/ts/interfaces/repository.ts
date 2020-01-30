@@ -1,4 +1,4 @@
-import { Option } from '../common/lib/option';
+import { Option } from '../lib/option';
 
 interface Repository<T> {
   get(): Promise<T[]>;

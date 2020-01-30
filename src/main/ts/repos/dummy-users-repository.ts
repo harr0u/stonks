@@ -1,6 +1,6 @@
-import {makeDummyUser, makeDummyUsers} from '../common/dummy/dummyUsers'
-import User from '../common/types/user'
-import {Option, eitherMap} from '../common/lib/option'
+import {makeDummyUser, makeDummyUsers} from '../mock/dummy-users'
+import User from '../types/user'
+import {Option, eitherMap} from '../lib/option'
 import Repository from '../interfaces/repository';
 
 
@@ -10,7 +10,7 @@ class DummyUsersRepository implements Repository<User> {
     this.nextUserId = this.users.reduce((nextId, user) => {user.id = nextId; return nextId + 1}, 1)
   }
 
-  private users: User[];
+  private readonly users: User[];
   private nextUserId: number;
 
   get(): Promise<User[]> {
@@ -21,7 +21,7 @@ class DummyUsersRepository implements Repository<User> {
     return eitherMap(
       this.users.find((u) => u.id === id),
       (u) => Promise.resolve(u),
-      () => Promise.reject(new Error('Couldn\'t find repos with id ' + id.toString()))
+      () => Promise.reject(new Error('Couldn\'t find user with id ' + id.toString()))
     )
   };
 
@@ -30,17 +30,21 @@ class DummyUsersRepository implements Repository<User> {
       if (this.users.some((u) => u.id == id)) {
         return Promise.reject(new Error('Id is duplicated'))
       } else {
-        return Promise.resolve(user)
+        this.users.push(user);
+        return Promise.resolve(user);
       }
     },
     () => {
-      return Promise.resolve({...user, id: this.nextUserId++});
+      const updatedUser: User = {...user, id: this.nextUserId++};
+      this.users.push(updatedUser)
+      return Promise.resolve(updatedUser);
     }
     );
   };
 
   deleteById(id: number): Promise<void> {
     const userArrayIndex = this.users.findIndex((u) => u.id == id);
+    // ~x is true for every integer except -1  😎 😎 😎
     if (~userArrayIndex) {
       this.users.splice(userArrayIndex, 1);
       return Promise.resolve()
