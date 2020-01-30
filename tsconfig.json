@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES3",
-    "lib": ["DOM", "ES2015", "ES2016"],
+    "target": "es3",
+    "lib": ["dom", "es2015", "es2016"],
     "experimentalDecorators": true,
     "outDir": "dist",
     "noImplicitAny": true,
