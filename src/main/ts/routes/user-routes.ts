@@ -1,26 +1,27 @@
-import {Router, Request, Response, response, request} from "express";
-import DummyUsersRepository from '../repos/dummy-users-repository';
+import {Router, Request, Response, response, request} from 'express';
+import DummyUsersRepository from '../integrations/fake/dummy-users-dao';
 import User from '../types/user';
-import Repository from "../interfaces/repository";
+import UsersDao from '../interfaces/Dao/users-dao';
+import DummyUsersDao from '../integrations/fake/dummy-users-dao'
 
 const router: Router = Router();
 
-const usersRepo: Repository<User> = new DummyUsersRepository();
+const usersRepo: UsersDao = new DummyUsersDao();
 
-router.get("/", async (request: Request, response: Response) => {
+router.get('/', async (request: Request, response: Response) => {
   try {
-    const users = await usersRepo.get();
+    const users = await usersRepo.getUsers();
 
     response.statusCode = 200;
     response.setHeader('content-type', 'application/json');
     response.end(JSON.stringify(users));
   } catch (err) {
     response.statusCode = 500;
-    response.end("Internal server Error :(");
+    response.end('Internal server Error :(');
   }
 });
 
-router.delete("/:id", async (request: Request, response: Response) => {
+router.delete('/:id', async (request: Request, response: Response) => {
   const id = parseInt(request.params.id, 10);
 
   if (isNaN(id)) {
@@ -28,7 +29,7 @@ router.delete("/:id", async (request: Request, response: Response) => {
     response.end('Bad id');
   }
   try {
-    await usersRepo.deleteById(id);
+    await usersRepo.deleteUserById(id);
   } catch (err) {
     response.statusCode = 404;
     response.end()
@@ -50,7 +51,7 @@ router.get('/:id', async (request: Request, response: Response) => {
   }
 
   try {
-    user = await usersRepo.getById(id);
+    user = await usersRepo.getUserById(id);
   } catch (err) {
     // Resource not found
     response.statusCode = 404;
@@ -76,7 +77,7 @@ router.post('/', async (request: Request, response: Response) => {
   }
 
   try {
-    user = await usersRepo.add(user);
+    user = await usersRepo.addUser(user);
   } catch (err) {
     // Conflict
     response.statusCode = 409;
