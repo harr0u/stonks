@@ -1,6 +1,5 @@
 import http from 'http'
 
-
 async function curlGETRaw(url: string): Promise<string> {
   return new Promise((onDone, onReject) => {
     http.get(url, (response) => {
@@ -10,7 +9,7 @@ async function curlGETRaw(url: string): Promise<string> {
         onReject('Error: ' + statusCode);
         return;
       }
-      
+
       let rawData = '';
       response.on('data', (chunk) => rawData += chunk);
       response.on('end', () => onDone(rawData));

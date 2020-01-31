@@ -1,16 +1,17 @@
-import {Request, Response, Express, Router} from "express";
-import usersRoute from './routes/user-routes'
+import {Request, Response, Express, Router} from 'express';
+import usersRoute from './routes/user-routes';
+import stonksRoute from './routes/stonks-routes';
 
-import express from "express";
+import express from 'express';
 
 
 const PORT: number = 1487;
 const app: Express = express();
-const router: Router = Router();
 
 app.use(express.json())
 app.use('/users', usersRoute);
-app.get("/", (__, response: Response) => {
+app.use('/stonks', stonksRoute);
+app.get('/', (__, response: Response) => {
   response.statusCode = 200;
   response.setHeader('content-type', 'text/html; charset=utf-8');
 
@@ -18,7 +19,8 @@ app.get("/", (__, response: Response) => {
   response.end(`
     <html>
       <body>
-        <a href="/users">Users</a>
+        <a href='/users'>Users</a>
+        <a href='/stonks'>Stocks</a>
       </body>
     </html>
   `);

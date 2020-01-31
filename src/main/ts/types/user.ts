@@ -1,5 +1,3 @@
-import {Option, optionApply} from '../lib/option';
-
 class User {
   public id?: number;
   public name: string;

@@ -1,10 +1,10 @@
-import User from '../types/user';
-import { pick } from '../utils';
+import User from '../user';
+import { pick } from '../../utils';
 
 
 function makeDummyUsers(count: number = 1): User[] {
-  const names = ["Mark", "Misha", "Masha", "Monya", "Mock"];
-  const passwords = ["qwerty", "qwe123", "123qwe", "qweasd"];
+  const names = ['Mark', 'Misha', 'Masha', 'Monya', 'Mock'];
+  const passwords = ['qwerty', 'qwe123', '123qwe', 'qweasd'];
 
   const users: User[] = []
   for (let i = 0; i < count; i++) {
