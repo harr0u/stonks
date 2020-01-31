@@ -3,4 +3,4 @@
 package-lock.json
 /.idea
 .stronkskey
-.DS_Store
+/.DS_Store
