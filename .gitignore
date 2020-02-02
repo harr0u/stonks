@@ -1,6 +1,11 @@
 /dist
+
 /node_modules
 package-lock.json
+
 /.idea
+/.vscode
+
 .stronkskey
-/.DS_Store
+
+.DS_Store
